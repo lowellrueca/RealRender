@@ -3,6 +3,8 @@ namespace RealRender.IdentityService.Models;
 
 public static class Config
 {
+    private const string _scope = "product-api-service";
+
     public static IEnumerable<IdentityResource> IdentityResources =>
         new IdentityResource[]
         {
@@ -15,25 +17,37 @@ public static class Config
             new ApiResource
             {
                 Name = "product-api-service-resource",
-                DisplayName = "Product Api Service Resource",
-                Scopes = new string[] {"product-api-service"}
+                DisplayName = "Product Api",
+                Scopes = new string[] {_scope}
             }
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope(name: "product-api-service", displayName: "Product Api Service")
+            new ApiScope(name: _scope, displayName: "Product Api")
         };
 
     public static IEnumerable<Client> Clients =>
         new Client[]
         {
             new Client{
-                ClientId = "product-api-client",
-                ClientSecrets = {new Secret("default-secret".Sha256())},
+                ClientId = GetClientId(),
+                ClientName = "product-api",
+                ClientSecrets = {new Secret(GetClientSecret())},
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
-                AllowedScopes = {"product-api-service"}
+                AllowedScopes = {_scope},
+                AllowedCorsOrigins = new string[] { "https://localhost:7001" }
             }
         };
+
+    private static string GetClientId()
+    {
+        return Environment.GetEnvironmentVariable("CONFIG__CLIENT_ID").ToString().Sha512();
+    }
+
+    private static string GetClientSecret()
+    {
+        return Environment.GetEnvironmentVariable("CONFIG__CLIENT_SECRET").ToString().Sha512();
+    }
 }
