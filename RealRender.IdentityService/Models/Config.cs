@@ -16,7 +16,7 @@ public static class Config
         {
             new ApiResource
             {
-                Name = "product-api-service-resource",
+                Name = "product-api",
                 DisplayName = "Product Api",
                 Scopes = new string[] {_scope}
             }
@@ -33,7 +33,7 @@ public static class Config
         {
             new Client{
                 ClientId = GetClientId(),
-                ClientName = "product-api",
+                ClientName = "Product Api",
                 ClientSecrets = {new Secret(GetClientSecret())},
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 AllowedScopes = {_scope},
@@ -43,7 +43,7 @@ public static class Config
 
     private static string GetClientId()
     {
-        return Environment.GetEnvironmentVariable("CONFIG__CLIENT_ID").ToString().Sha512();
+        return Environment.GetEnvironmentVariable("CONFIG__CLIENT_ID").ToString();
     }
 
     private static string GetClientSecret()
