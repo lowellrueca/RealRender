@@ -19,33 +19,33 @@ public static class ServiceExtension
         {
             options.SignIn.RequireConfirmedAccount = true;
         })
-            .AddDefaultTokenProviders()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+        .AddDefaultTokenProviders()
+        .AddEntityFrameworkStores<ApplicationDbContext>();
     }
 
     public static void ConfigureIdentityServer(this IServiceCollection services)
     {
         services.AddIdentityServer()
-            .AddConfigurationStore(configurationStoreOptions =>
-            {
-                configurationStoreOptions.ResolveDbContextOptions = IdentityServerDbContextOptions;
-            })
-            .AddOperationalStore(operationalStoreOptions =>
-            {
-                operationalStoreOptions.ResolveDbContextOptions = IdentityServerDbContextOptions;
-            })
-            .AddAspNetIdentity<ApplicationUser>();
+        .AddConfigurationStore(configurationStoreOptions =>
+        {
+            configurationStoreOptions.ResolveDbContextOptions = IdentityServerDbContextOptions;
+        })
+        .AddOperationalStore(operationalStoreOptions =>
+        {
+            operationalStoreOptions.ResolveDbContextOptions = IdentityServerDbContextOptions;
+        })
+        .AddAspNetIdentity<ApplicationUser>();
     }
 
     private static void IdentityDbContextOptions(IServiceProvider serviceProvider, DbContextOptionsBuilder dbContextOptions)
     {
-        var connectionString = serviceProvider.GetRequiredService<IConfiguration>().GetConnectionString("identitydb");
+        var connectionString = serviceProvider.GetRequiredService<IConfiguration>()["identitydb"];
         dbContextOptions.UseNpgsql(connectionString, SqlOptions);
     }
 
     private static void IdentityServerDbContextOptions(IServiceProvider serviceProvider, DbContextOptionsBuilder dbContextOptionsBuilder)
     {
-        var connectionString = serviceProvider.GetRequiredService<IConfiguration>().GetConnectionString("identityserverdb");
+        var connectionString = serviceProvider.GetRequiredService<IConfiguration>()["identityserverdb"];
         dbContextOptionsBuilder.UseNpgsql(connectionString, SqlOptions);
     }
 
