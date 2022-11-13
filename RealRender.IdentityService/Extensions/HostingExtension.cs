@@ -56,6 +56,7 @@ public static class HostingExtension
             }
 
             var configurationDbContext = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+
             if (!await configurationDbContext.Clients.AnyAsync())
             {
                 foreach (var client in Config.Clients)
@@ -64,6 +65,7 @@ public static class HostingExtension
                 }
                 await configurationDbContext.SaveChangesAsync();
             }
+
             if (!await configurationDbContext.IdentityResources.AnyAsync())
             {
                 foreach (var resource in Config.IdentityResources)
@@ -73,11 +75,20 @@ public static class HostingExtension
                 await configurationDbContext.SaveChangesAsync();
             }
 
+            if (!await configurationDbContext.ApiResources.AnyAsync())
+            {
+                foreach(var apiResource in Config.ApiResources) 
+                { 
+                    await configurationDbContext.ApiResources.AddAsync(apiResource.ToEntity());
+                }
+                await configurationDbContext.SaveChangesAsync();
+            }
+
             if (!await configurationDbContext.ApiScopes.AnyAsync())
             {
-                foreach (var resource in Config.ApiScopes)
+                foreach (var apiScope in Config.ApiScopes)
                 {
-                    await configurationDbContext.ApiScopes.AddAsync(resource.ToEntity());
+                    await configurationDbContext.ApiScopes.AddAsync(apiScope.ToEntity());
                 }
                 await configurationDbContext.SaveChangesAsync();
             }
