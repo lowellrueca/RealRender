@@ -16,6 +16,7 @@ public static class HostingExtension
         builder.Services.ConfigureIdentity();
         builder.Services.ConfigureIdentityServer();
         builder.Services.AddAuthorization();
+        builder.Services.ConfigureCors();
         return builder.Build();
     }
 
@@ -25,7 +26,7 @@ public static class HostingExtension
         application.UseHttpsRedirection();
         application.UseIdentityServer();
         application.UseAuthorization();
-
+        application.UseCors();
         InitializeDb(application);
 
         application.Run();

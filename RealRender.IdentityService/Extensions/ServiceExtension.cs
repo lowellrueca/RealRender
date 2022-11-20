@@ -53,4 +53,15 @@ public static class ServiceExtension
     {
         dbContextOptionsBuilder.MigrationsAssembly(typeof(Program).GetTypeInfo().Assembly.GetName().Name);
     }
+
+    public static void ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(corsOptions =>
+        {
+            corsOptions.AddDefaultPolicy(corsPolicyBuilder =>
+            {
+                corsPolicyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            });
+        });
+    }
 }
