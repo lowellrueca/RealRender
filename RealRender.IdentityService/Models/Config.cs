@@ -37,7 +37,7 @@ public static class Config
                 ClientSecrets = {new Secret(GetClientSecret())},
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 AllowedScopes = {_scope},
-                AllowedCorsOrigins = new string[] { "https://localhost:7001" }
+                AllowedCorsOrigins = new string[] { "https://product:7001" }
             }
         };
 
