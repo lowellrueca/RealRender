@@ -457,3 +457,10 @@ $RECYCLE.BIN/
 ## env files
 ##
 **/*.env
+
+##
+## others
+##
+localhost.crt
+localhost.key
+generate_pfx.txt

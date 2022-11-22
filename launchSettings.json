@@ -4,10 +4,12 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "composeLaunchAction": "LaunchBrowser",
-      "composeLaunchServiceName": "realrender.identityservice",
-      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
+      "composeLaunchServiceName": "product",
+      "composeLaunchUrl": "{Scheme}://product:{ServicePort}/swagger",
       "serviceActions": {
-        "realrender.identityservice": "StartDebugging"
+        "product": "StartDebugging",
+        "identity": "StartDebugging",
+        "db": "StartWithoutDebugging"
       }
     }
   }

@@ -1,29 +1,42 @@
 version: '3.9'
 services:
-  realrender.dbservice:
+  db:
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./env/db_service.env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready"]
       interval: 10s
       timeout: 5s
       retries: 3
-  realrender.identityservice:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:5001;http://+:5000
-      - ASPNETCORE_HTTPS_PORT=5001
-      - CONNECTIONSTRINGS__IDENTITYDB=Server=realrender.dbservice;Port=5432;Database=identity;User Id=postgres;Password=postgres;
-      - CONNECTIONSTRINGS__IDENTITYSERVERDB=Server=realrender.dbservice;Port=5432;Database=identityserver;User Id=postgres;Password=postgres;
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  identity:
+    env_file:
+      - ./env/identity_service.env
     ports:
       - "5000:5000"
       - "5001:5001"
     depends_on:
-      realrender.dbservice:
+      db:
         condition: service_healthy
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ./localhost.pfx:/https/localhost.pfx:ro
+      - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
+    entrypoint: /bin/sh -c "update-ca-certificates && dotnet RealRender.IdentityService.dll"
+  product:
+    env_file:
+      - ./env/product_api_service.env
+    ports:
+      - "7000:7000"
+      - "7001:7001"
+    depends_on:
+      - identity
+    volumes:
+      - ./localhost.pfx:/https/localhost.pfx:ro
+      - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
+    entrypoint: /bin/sh -c "update-ca-certificates && dotnet RealRender.ProductApiService.dll"
+volumes:
+  db_data:
+    name: realrender_db

@@ -7,6 +7,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealRender.IdentityService"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7D92F6FC-D344-4A05-9DCA-4187629BB6CD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealRender.ProductApiService", "RealRender.ProductApiService\RealRender.ProductApiService.csproj", "{DA256C0A-F64E-4BE7-AB5C-86E5AD95D1DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9957FA8F-DA0D-405C-8010-CC380418DCE3}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		generate_pfx.txt = generate_pfx.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "env", "env", "{E0465D7F-3FC1-49F1-9188-DEAE3B051FE9}"
+	ProjectSection(SolutionItems) = preProject
+		env\console_service.env = env\console_service.env
+		env\db_service.env = env\db_service.env
+		env\identity_service.env = env\identity_service.env
+		env\product_api_service.env = env\product_api_service.env
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +37,16 @@ Global
 		{7D92F6FC-D344-4A05-9DCA-4187629BB6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D92F6FC-D344-4A05-9DCA-4187629BB6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D92F6FC-D344-4A05-9DCA-4187629BB6CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA256C0A-F64E-4BE7-AB5C-86E5AD95D1DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA256C0A-F64E-4BE7-AB5C-86E5AD95D1DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA256C0A-F64E-4BE7-AB5C-86E5AD95D1DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA256C0A-F64E-4BE7-AB5C-86E5AD95D1DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0465D7F-3FC1-49F1-9188-DEAE3B051FE9} = {9957FA8F-DA0D-405C-8010-CC380418DCE3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E571ADD1-4987-4409-8192-920AB9CB872C}

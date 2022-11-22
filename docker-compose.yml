@@ -1,11 +1,17 @@
 version: '3.9'
 services:
-  realrender.dbservice:
+  db:
     container_name: realrender_db_service
     image: postgres:15.0-alpine
-  realrender.identityservice:
+  identity:
     container_name: realrender_identity_service
     image: ${DOCKER_REGISTRY-}realrenderidentityservice
     build:
       context: .
       dockerfile: RealRender.IdentityService/Dockerfile
+  product:
+    container_name: realrender_product_api_service
+    image: ${DOCKER_REGISTRY-}realrenderproductapiservice
+    build:
+      context: .
+      dockerfile: RealRender.ProductApiService/Dockerfile

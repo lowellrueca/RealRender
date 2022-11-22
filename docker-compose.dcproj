@@ -7,7 +7,7 @@
     <DockerComposeProjectName>realrender</DockerComposeProjectName>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>realrender.identityservice</DockerServiceName>
+    <DockerServiceName>product</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
