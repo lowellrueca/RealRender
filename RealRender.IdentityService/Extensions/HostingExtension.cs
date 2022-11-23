@@ -1,5 +1,8 @@
 ﻿using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RealRender.IdentityService.Db;
@@ -17,6 +20,7 @@ public static class HostingExtension
         builder.Services.ConfigureIdentityServer();
         builder.Services.AddAuthorization();
         builder.Services.ConfigureCors();
+        builder.ConfigureDataProtection();
         return builder.Build();
     }
 
@@ -94,5 +98,16 @@ public static class HostingExtension
                 await configurationDbContext.SaveChangesAsync();
             }
         }
+    }
+
+    private static void ConfigureDataProtection(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo(@"D:\temp\keys\"))
+            .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+            {
+                EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+                ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+            });
     }
 }

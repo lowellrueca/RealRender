@@ -24,6 +24,7 @@ services:
     volumes:
       - ./localhost.pfx:/https/localhost.pfx:ro
       - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
+      - /d/temp/keys:/root/.aspnet/DataProtection-Keys
     entrypoint: /bin/sh -c "update-ca-certificates && dotnet RealRender.IdentityService.dll"
   product:
     env_file:
@@ -36,6 +37,7 @@ services:
     volumes:
       - ./localhost.pfx:/https/localhost.pfx:ro
       - ./localhost.crt:/usr/local/share/ca-certificates/localhost.crt:ro
+      - /d/temp/keys:/root/.aspnet/DataProtection-Keys
     entrypoint: /bin/sh -c "update-ca-certificates && dotnet RealRender.ProductApiService.dll"
 volumes:
   db_data:

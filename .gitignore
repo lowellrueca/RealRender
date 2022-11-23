@@ -464,3 +464,4 @@ $RECYCLE.BIN/
 localhost.crt
 localhost.key
 generate_pfx.txt
+**/*.xml
